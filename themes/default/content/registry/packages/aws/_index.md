@@ -18,11 +18,105 @@ Consider trying [AWS Native]({{<relref "/registry/packages/aws-native">}}) if yo
 
 ## Example
 
+{{< chooser language "typescript,python,go,csharp,java,yaml" >}}
+
+{{% choosable language typescript %}}
+
 ```typescript
 const aws = require("@pulumi/aws");
 
 const bucket = new aws.s3.Bucket("mybucket");
 ```
+
+{{% /choosable %}}
+
+{{% choosable language python %}}
+
+```python
+import pulumi
+import pulumi_aws as aws
+
+bucket = aws.s3.Bucket("bucket")
+```
+
+{{% /choosable %}}
+
+{{% choosable language go %}}
+
+```go
+package main
+
+import (
+	"github.com/pulumi/pulumi-aws/sdk/v5/go/aws/s3"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		_, err := s3.NewBucket(ctx, "bucket", &s3.BucketArgs{})
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+}
+
+```
+
+{{% /choosable %}}
+
+{{% choosable language csharp %}}
+
+```csharp
+using Pulumi;
+using Aws = Pulumi.Aws;
+
+class MyStack : Stack
+{
+    public MyStack()
+    {
+        var bucket = new Aws.S3.Bucket("bucket");
+    }
+}
+
+```
+
+{{% /choosable %}}
+
+{{% choosable language java %}}
+
+```java
+import com.pulumi.Context;
+import com.pulumi.Pulumi;
+import com.pulumi.aws.s3.Bucket;
+
+public class App {
+    public static void main(String[] args) {
+        Pulumi.run(App::stack);
+    }
+
+    private static void stack(Context ctx) {
+        final var bucket = new Bucket("my-bucket");
+        ctx.export("bucketName", bucket.name());
+  }
+}
+```
+
+{{% /choosable %}}
+
+{{% choosable language yaml %}}
+
+```yaml
+resources:
+  mybucket:
+    type: aws:s3:Bucket
+outputs:
+  bucketName: ${mybucket.name}
+```
+
+{{% /choosable %}}
+
+{{< /chooser >}}
 
 Visit the [How-to Guides]({{<relref "./how-to-guides">}}) to find step-by-step guides for specific scenarios like creating a serverless application or setting up Athena search.
 
